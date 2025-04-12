@@ -1,0 +1,6 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: npm install -g npm@latest
+  - init: nvm install 18 && nvm use 18 && nvm alias default 18
