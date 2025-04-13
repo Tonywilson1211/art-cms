@@ -677,6 +677,81 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiArtCategoryArtCategory extends Schema.CollectionType {
+  collectionName: 'art_categories';
+  info: {
+    singularName: 'art-category';
+    pluralName: 'art-categories';
+    displayName: 'Art Category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    slug: Attribute.UID<'api::art-category.art-category', 'name'>;
+    description: Attribute.Blocks;
+    artworks: Attribute.Relation<
+      'api::art-category.art-category',
+      'oneToMany',
+      'api::artwork.artwork'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::art-category.art-category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::art-category.art-category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiArtworkArtwork extends Schema.CollectionType {
+  collectionName: 'artworks';
+  info: {
+    singularName: 'artwork';
+    pluralName: 'artworks';
+    displayName: 'Artwork';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    slug: Attribute.UID<'api::artwork.artwork', 'title'>;
+    description: Attribute.Blocks;
+    image: Attribute.Media;
+    art_category: Attribute.Relation<
+      'api::artwork.artwork',
+      'manyToOne',
+      'api::art-category.art-category'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::artwork.artwork',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::artwork.artwork',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -693,6 +768,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::art-category.art-category': ApiArtCategoryArtCategory;
+      'api::artwork.artwork': ApiArtworkArtwork;
     }
   }
 }

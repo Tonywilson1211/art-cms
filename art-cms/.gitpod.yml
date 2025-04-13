@@ -2,5 +2,10 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: npm install -g npm@latest
-  - init: nvm install 18 && nvm use 18 && nvm alias default 18
+  - name: Use Node 18 and start Strapi
+    init: |
+      cd art-studio
+      npm install
+    command: |
+      cd art-studio
+      npm run develop
